@@ -1,0 +1,11 @@
+GIT KOMMANDOER:
+
+For at ligge ændringer op i den fælles gitHub:
+
+1. git add -A
+2. git commit -m "hvad du har ændret"
+3. git push 
+
+
+For at hente ændringer:
+1. git pull
