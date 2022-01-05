@@ -16,6 +16,9 @@ import matplotlib.pyplot as plt
 
 
 #%% 
+# Tager numpy ndarray eller torch tensor som input i test_image og test_mask
+# Plotter den givne slice (n_slice)
+
 def plot_2d_data(test_image,test_mask,n_slice):
     plt.figure(figsize=(12, 8))
     
@@ -45,8 +48,4 @@ def plot_2d_data(test_image,test_mask,n_slice):
     plt.title('Mask 4')
     
     plt.show()
-
-
-
-
 
