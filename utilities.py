@@ -13,6 +13,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 import matplotlib.pyplot as plt
+import glob
+
 
 
 #%% 
@@ -49,3 +51,22 @@ def plot_2d_data(test_image,test_mask,n_slice):
     
     plt.show()
 
+
+#%% Batch load single
+# Will load a single image and mask but as a batch of 1. 
+def batchLoad_single(directory, fileindex):
+    
+    image_list = sorted(glob.glob(str(directory) + '/images/*'))
+    mask_list  = sorted(glob.glob(str(directory) + '/masks/*'))
+    
+    image = np.load(image_list[fileindex])
+    mask  = np.load(mask_list[fileindex])
+    
+    image_batch = np.expand_dims(image, axis=0)
+    mask_batch  = np.expand_dims(mask, axis=0)
+    
+    return image_batch, mask_batch
+    
+# Example:
+# directory = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/BraTS2020/train_valid_data/train'
+# test_image, test_mask = batchLoad_zero(directory, 0)

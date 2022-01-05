@@ -90,6 +90,11 @@ class UNet(nn.Module):
         # return y_out
             
     
+#%% test
+
+
+
+
 if __name__ == '__main__':
     input_data = torch.rand((1, 4, 128, 128, 128))
     
