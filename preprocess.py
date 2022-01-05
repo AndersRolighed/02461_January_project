@@ -31,7 +31,7 @@ def to_categorical(y, num_classes):
 # for indx in range(len(t1_list)):   #Using t1_list as all lists are of same size
 for indx in range(20):
     print("Preprocessing image and masks number: ", indx)
-      
+    
     # Load image data from each modality and normalize
     temp_image_t1    = nib.load(t1_list[indx]).get_fdata()
     temp_image_t1    = scaler.fit_transform(temp_image_t1.reshape(-1, temp_image_t1.shape[-1])).reshape(temp_image_t1.shape)
@@ -51,7 +51,7 @@ for indx in range(20):
     temp_mask         = temp_mask.astype(np.uint8)
     temp_mask[temp_mask==4] = 3
     temp_mask = temp_mask[56:184, 56:184, 13:141]
-     
+    
     # Embed the 4 values to categorical 4-dimensinal, binary values. Finally stack the values to similar shape as with images. 
     temp_mask = to_categorical(temp_mask, num_classes=4)
     temp_mask = np.stack([temp_mask[:,:,:,0], temp_mask[:,:,:,1], temp_mask[:,:,:,2], temp_mask[:,:,:,3]], axis=0)

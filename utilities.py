@@ -50,14 +50,49 @@ def plot_2d_data(test_image,test_mask,n_slice):
     plt.title('Mask 4')
     
     plt.show()
+    
+
+#%%
+# Tager numpy ndarray eller torch tensor som input i test_image og test_mask
+# Plotter den givne slice (n_slice)
+
+def plot_2d_tensor(test_image,test_mask,n_slice):
+    plt.figure(figsize=(12, 8))
+    
+    plt.subplot(241)
+    plt.imshow(test_image[0,0,:,:,n_slice], cmap='gray')
+    plt.title('Modality 1')
+    plt.subplot(242)
+    plt.imshow(test_image[0,1,:,:,n_slice], cmap='gray')
+    plt.title('Modality 2')
+    plt.subplot(243)
+    plt.imshow(test_image[0,2,:,:,n_slice], cmap='gray')
+    plt.title('Modality 3')
+    plt.subplot(244)
+    plt.imshow(test_image[0,3,:,:,n_slice], cmap='gray')
+    plt.title('Modality 4')
+    plt.subplot(245)
+    plt.imshow(test_mask[0,0,:,:,n_slice], cmap='gray')
+    plt.title('Mask 1')
+    plt.subplot(246)
+    plt.imshow(test_mask[0,1,:,:,n_slice], cmap='gray')
+    plt.title('Mask 2')
+    plt.subplot(247)
+    plt.imshow(test_mask[0,2,:,:,n_slice], cmap='gray')
+    plt.title('Mask 3')
+    plt.subplot(248)
+    plt.imshow(test_mask[0,3,:,:,n_slice], cmap='gray')
+    plt.title('Mask 4')
+    
+    plt.show()
 
 
 #%% Batch load single
 # Will load a single image and mask but as a batch of 1. 
 def batchLoad_single(directory, fileindex):
     
-    image_list = sorted(glob.glob(str(directory) + '/images/*'))
-    mask_list  = sorted(glob.glob(str(directory) + '/masks/*'))
+    image_list = sorted(glob.glob(str(directory) + 'images/*'))
+    mask_list  = sorted(glob.glob(str(directory) + 'masks/*'))
     
     image = np.load(image_list[fileindex])
     mask  = np.load(mask_list[fileindex])
@@ -65,8 +100,13 @@ def batchLoad_single(directory, fileindex):
     image_batch = np.expand_dims(image, axis=0)
     mask_batch  = np.expand_dims(mask, axis=0)
     
-    return image_batch, mask_batch
+    image_batch_tensor = torch.from_numpy(image_batch)
+    mask_batch_tensor = torch.from_numpy(mask_batch)
+    
+    # print(image_batch, image_batch_tensor)
+    
+    return image_batch_tensor.float(), mask_batch_tensor.float()
     
 # Example:
-# directory = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/BraTS2020/train_valid_data/train'
-# test_image, test_mask = batchLoad_zero(directory, 0)
+# directory = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/BraTS2020/train_valid_data/train/'
+# test_image, test_mask = batchLoad_single(directory, 0)

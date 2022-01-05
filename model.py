@@ -8,9 +8,10 @@ Created on Sun Jan  2 14:21:19 2022
 
 #%% Import
 
+import numpy as np
 import torch
 import torch.nn as nn
-
+from utilities import batchLoad_single, plot_2d_data, plot_2d_tensor
 
 #%% Functions
 
@@ -87,20 +88,30 @@ class UNet(nn.Module):
         for num in range(1,9): exec("print('y',num,y" + str(num) + ".size())")
         print()
         print("y_out:", y_out.size(), type(y_out))
-        # return y_out
-            
+        
+        return y_out
+        
     
 #%% test
 
 
-
-
 if __name__ == '__main__':
-    input_data = torch.rand((1, 4, 128, 128, 128))
+    directory = "./BraTS2020/train_valid_data/train/"
+    test_image, test_mask = batchLoad_single(directory, 0)
+
+    # input_data = torch.rand((1, 4, 128, 128, 128))
+    input_data = test_image
     
     model = UNet()
-    print(model(input_data))
-      
+    # print(model(input_data))
+    test_output = model(input_data)
     
+    print(type(test_output), np.shape(test_output))
     
+    # Plot test
+    out_np = test_output.detach().numpy()
+    mask_np = test_mask.detach().numpy()
+
+    plot_2d_tensor(out_np, mask_np, 75)
     
+
