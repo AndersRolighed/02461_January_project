@@ -15,6 +15,7 @@ from utilities import batchLoad_single, plot_2d_data, plot_2d_tensor
 
 #%% Functions
 
+# input_conv og output_conv er integers som angiver dimensionen af hhv. input og output
 def double_convolution(input_conv, output_conv):
     convolution = nn.Sequential(
         nn.Conv3d(input_conv, output_conv, kernel_size=2, padding="same"),
@@ -23,7 +24,6 @@ def double_convolution(input_conv, output_conv):
         nn.ReLU(inplace=True),
         )
     return convolution
-
 
 #%% Class
 
@@ -53,8 +53,6 @@ class UNet(nn.Module):
         
         self.out = nn.Conv3d(in_channels=16, out_channels=4, kernel_size=1)
 
-        
-    
     def forward(self, input_data):
         # Encoder 
         x1 = self.down_conv_1(input_data)

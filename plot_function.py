@@ -39,9 +39,11 @@ def plot_2d_data(test_image,test_mask,n_slice):
     
     plt.show()
 
-test_image = torch.from_numpy(np.load("C:/Users/Rasmus/Desktop/MRI-projekt/02461_January_project/BraTS2020/train_valid_data/train/images/image_0.npy"))
+image_number = "17"
 
-test_mask  = torch.from_numpy(np.load("C:/Users/Rasmus/Desktop/MRI-projekt/02461_January_project/BraTS2020/train_valid_data/train/masks/mask_0.npy"))
+test_image = torch.from_numpy(np.load("C:/Users/Rasmus/Desktop/MRI-projekt/02461_January_project/BraTS2020/train_valid_data/train/images/image_"+image_number+".npy"))
+
+test_mask  = torch.from_numpy(np.load("C:/Users/Rasmus/Desktop/MRI-projekt/02461_January_project/BraTS2020/train_valid_data/train/masks/mask_"+image_number+".npy"))
 
 print(type(test_image))
 print(type(test_mask))
