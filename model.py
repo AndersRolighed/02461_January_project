@@ -18,9 +18,9 @@ from utilities import batchLoad_single, plot_2d_data, plot_2d_tensor
 # input_conv og output_conv er integers som angiver dimensionen af hhv. input og output
 def double_convolution(input_conv, output_conv):
     convolution = nn.Sequential(
-        nn.Conv3d(input_conv, output_conv, kernel_size=2, padding="same"),
+        nn.Conv3d(input_conv, output_conv, kernel_size=3, padding="same"),
         nn.ReLU(inplace=True),
-        nn.Conv3d(output_conv, output_conv, kernel_size=2, padding="same"),
+        nn.Conv3d(output_conv, output_conv, kernel_size=3, padding="same"),
         nn.ReLU(inplace=True),
         )
     return convolution
