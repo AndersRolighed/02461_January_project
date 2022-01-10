@@ -13,9 +13,8 @@ import torch.nn as nn
 import torch.optim as optim
 
 from torch.utils.data import DataLoader
-from model import UNet 
+from model import UNet, double_convolution 
 from data_load import BraTS_dataset
-
 
 def training():
     # parametrer
@@ -45,14 +44,21 @@ def training():
     model.train()
     
     # Trænings loop
+    all_loss = []
     for epoch in range(num_epochs):
         
-        for feature, mask in dataloader:
+        for i, (feature, mask) in enumerate(dataloader):
+            feature, mask = feature.float(), mask.float()
             out = model(feature)
             l = loss(out, mask)    
             optimizer.zero_grad()
             l.backward()
             optimizer.step()
+            
+            
+            # all_loss += [l.detach().numpy()]
+            # plt.plot(np.array(all_loss))
+            # plt.show()
             
             print(f"loss = {l}")
     
