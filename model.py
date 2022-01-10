@@ -65,28 +65,19 @@ class UNet(nn.Module):
         x8 = self.max_pool(x7)
         x9 = self.down_conv_5(x8)
         
-        print("input: ", input_data.size())
-        print()
-        for num in range(1,10): exec("print('x',num,x" + str(num) + ".size())") 
-        print()
-        
         # Decoder (Uses unnessesary memory by storing each y1..8)
-        y1 = self.up_trans_1(x9)
-        y2 = self.up_conv_1(torch.cat([y1,x7], 1))
-        y3 = self.up_trans_2(y2)
-        y4 = self.up_conv_2(torch.cat([y3,x5], 1))
-        y5 = self.up_trans_3(y4)
-        y6 = self.up_conv_3(torch.cat([y5,x3], 1))
-        y7 = self.up_trans_4(y6)
-        y8 = self.up_conv_4(torch.cat([y7,x1], 1))
+        y = self.up_trans_1(x9)
+        y = self.up_conv_1(torch.cat([y,x7], 1))
+        y = self.up_trans_2(y)
+        y = self.up_conv_2(torch.cat([y,x5], 1))
+        y = self.up_trans_3(y)
+        y = self.up_conv_3(torch.cat([y,x3], 1))
+        y = self.up_trans_4(y)
+        y = self.up_conv_4(torch.cat([y,x1], 1))
         # y9 = self.up_trans_5(y8)
         
-        y_out = self.out(y8)
+        y_out = self.out(y)
 
-        for num in range(1,9): exec("print('y',num,y" + str(num) + ".size())")
-        print()
-        print("y_out:", y_out.size(), type(y_out))
-        
         return y_out
         
     
