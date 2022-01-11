@@ -56,13 +56,12 @@ def training():
             l.backward()
             optimizer.step()
             
-            
             all_loss += [l.detach().numpy()]
-            # plt.plot(np.array(all_loss))
-            # plt.show()
+            
+            plt.plot(np.array(all_loss))
+            plt.show()
             
             print(f"loss = {l}")
-            print("Mean loss = "+str(np.mean(np.array(all_loss))))
-    
+            
 if __name__ == "__main__":
     training()
