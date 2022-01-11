@@ -18,7 +18,7 @@ from data_load import BraTS_dataset
 
 def training():
     # parametrer
-    learning_rate = 0.01
+    learning_rate = 0.005
     num_epochs = 20 
     model = UNet()
     
@@ -35,10 +35,10 @@ def training():
     optimizer = torch.optim.Adam(model.parameters(),lr=learning_rate)
     
     # Få dataen
-    test_data = BraTS_dataset(image_dir = "./BraTS2020/train_valid_data/train/images", 
+    train_data = BraTS_dataset(image_dir = "./BraTS2020/train_valid_data/train/images", 
                               mask_dir = "./BraTS2020/train_valid_data/train/masks")
     
-    dataloader = DataLoader(test_data, batch_size=2, shuffle=True)
+    dataloader = DataLoader(train_data, batch_size=2, shuffle=True)
     
     # Sætter i trænings mode
     model.train()
@@ -46,6 +46,7 @@ def training():
     # Trænings loop
     all_loss = []
     for epoch in range(num_epochs):
+        print(f"Epoch number: {epoch}")
         
         for i, (feature, mask) in enumerate(dataloader):
             feature, mask = feature.float(), mask.float()
@@ -56,11 +57,12 @@ def training():
             optimizer.step()
             
             
-            # all_loss += [l.detach().numpy()]
+            all_loss += [l.detach().numpy()]
             # plt.plot(np.array(all_loss))
             # plt.show()
             
             print(f"loss = {l}")
+            print("Mean loss = "+str(np.mean(np.array(all_loss))))
     
 if __name__ == "__main__":
     training()
