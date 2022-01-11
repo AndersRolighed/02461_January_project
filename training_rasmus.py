@@ -15,11 +15,12 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from model import UNet, double_convolution 
 from data_load import BraTS_dataset
+from utilities import plot_2d_tensor
 
 def training():
     # parametrer
-    learning_rate = 0.005
-    num_epochs = 20 
+    learning_rate = 0.002
+    num_epochs = 1
     model = UNet()
     
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
@@ -51,7 +52,16 @@ def training():
         for i, (feature, mask) in enumerate(dataloader):
             feature, mask = feature.float(), mask.float()
             out = model(feature)
-            l = loss(out, mask)    
+            # print(out)
+            # print(type(mask))
+            
+            out_np = out.detach().numpy()
+            mask_np = mask.detach().numpy()
+            
+            plot_2d_tensor(mask_np, out_np, 75)
+            #plt.imshow(out[0,:,:,75], cmap='gray')
+            
+            l = loss(out, mask)
             optimizer.zero_grad()
             l.backward()
             optimizer.step()
@@ -62,6 +72,12 @@ def training():
             plt.show()
             
             print(f"loss = {l}")
+    
+    # Gemme netværket
+    
+    FILE = "model.pth"
+    PATH = "./gemte_netværk"
+    torch.save(model.state_dict(),FILE)
             
 if __name__ == "__main__":
     training()
