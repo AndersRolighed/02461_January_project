@@ -20,7 +20,7 @@ from utilities import plot_2d_tensor
 def training():
     # parametrer
     learning_rate = 0.002
-    num_epochs = 1
+    num_epochs = 50
     model = UNet()
     
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
@@ -72,11 +72,24 @@ def training():
             plt.show()
             
             print(f"loss = {l}")
+            
+            if l>2:
+                print("fuck...")
+            elif l>1:
+                print("Terrible")
+            elif l>0.3:
+                print("Not great")
+            elif l<0.2:
+                print("Fine")
+            elif l<0.05:
+                print("On the right track, buddy")
+            elif l<0.02:
+                print("yay :D")
     
     # Gemme netværket
     
-    FILE = "model.pth"
-    PATH = "./gemte_netværk"
+    FILE = "model2.pth"
+    
     torch.save(model.state_dict(),FILE)
             
 if __name__ == "__main__":
