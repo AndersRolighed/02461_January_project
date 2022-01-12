@@ -20,7 +20,7 @@ from utilities import plot_2d_tensor
 def training():
     # parametrer
     learning_rate = 0.002
-    num_epochs = 50
+    num_epochs = 2
     model = UNet()
     
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
