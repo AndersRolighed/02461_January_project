@@ -5,7 +5,6 @@ Created on Mon Jan 10 13:13:23 2022
 @author: Rasmus
 """
 
-
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -13,84 +12,107 @@ import torch.nn as nn
 import torch.optim as optim
 
 from torch.utils.data import DataLoader
-from model import UNet, double_convolution 
+from model import UNet, double_convolution
 from data_load import BraTS_dataset
 from utilities import plot_2d_tensor
 
+import os
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
+
 def training():
-    # parametrer
+    # parameters
     learning_rate = 0.002
-    num_epochs = 50
+    num_epochs = 5
     model = UNet()
-    
+    out = 0
+    mask = 0
+
+    # Set til True hvis du gerne vil køre videre med en loaded model.
+    load_model = False
+
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
     device = "cuda" if torch.cuda.is_available() else torch.device("cpu")
-    
-    # initialisering 
+
+    # initialization
     model.to(device)
-    
+
     # Loss function
-    loss = torch.nn.CrossEntropyLoss() 
-    
+    loss = torch.nn.CrossEntropyLoss()
+
     # Optimizer
-    optimizer = torch.optim.Adam(model.parameters(),lr=learning_rate)
-    
-    # Få dataen
-    train_data = BraTS_dataset(image_dir = "./BraTS2020/train_valid_data/train/images", 
-                              mask_dir = "./BraTS2020/train_valid_data/train/masks")
-    
+    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+    # Get the data
+    train_data = BraTS_dataset(image_dir="./BraTS2020/train_valid_data/train/images",
+                               mask_dir="./BraTS2020/train_valid_data/train/masks")
+
     dataloader = DataLoader(train_data, batch_size=2, shuffle=True)
-    
-    # Sætter i trænings mode
+
+    # Training mode initialized
     model.train()
-    
-    # Trænings loop
+
+    if load_model:
+        load_checkpoint(torch.load("my_checkpoint.pth.tar"), model, optimizer)
+
+    # Training loop
     all_loss = []
     for epoch in range(num_epochs):
         print(f"Epoch number: {epoch}")
-        
+
+        checkpoint = {'state_dict': model.state_dict(), 'optimizer': optimizer.state_dict()}
+        if epoch == 5:
+            save_checkpoint(checkpoint)
+
         for i, (feature, mask) in enumerate(dataloader):
             feature, mask = feature.float(), mask.float()
             out = model(feature)
             # print(out)
             # print(type(mask))
-            
-            out_np = out.detach().numpy()
-            mask_np = mask.detach().numpy()
-            
-            plot_2d_tensor(mask_np, out_np, 75)
-            #plt.imshow(out[0,:,:,75], cmap='gray')
-            
+
             l = loss(out, mask)
             optimizer.zero_grad()
             l.backward()
             optimizer.step()
-            
+
             all_loss += [l.detach().numpy()]
-            
-            plt.plot(np.array(all_loss))
-            plt.show()
-            
+
             print(f"loss = {l}")
-            
-            if l>2:
-                print("fuck...")
-            elif l>1:
-                print("Terrible")
-            elif l>0.3:
-                print("Not great")
-            elif l<0.2:
-                print("Fine")
-            elif l<0.05:
-                print("On the right track, buddy")
-            elif l<0.02:
-                print("yay :D")
-    
-    # Gemme netværket
-    
-    FILE = "model2.pth"
-    
-    torch.save(model.state_dict(),FILE)
-            
+
+    # Save the model
+
+    # FILE = "model.pth"
+    # torch.save(model.state_dict(), FILE)
+
+    # print("Model's state_dict:")
+    # for param_tensor in model.state_dict():
+        # print(param_tensor, "\t", model.state_dict()[param_tensor].size())
+
+    # print("Optimizer's state_dict:")
+    # for var_name in optimizer.state_dict():
+        # print(var_name, "\t", optimizer.state_dict()[var_name])
+
+    out_np = out.detach().numpy()
+    mask_np = mask.detach().numpy()
+
+    plot_2d_tensor(mask_np, out_np, 75)
+
+    return all_loss
+
+
+def save_checkpoint(state, filename="my_checkpoint.pth.tar"):
+    print('=> Saving checkpoint')
+    torch.save(state, filename)
+
+
+def load_checkpoint(checkpoint, model, optimizer):
+    print("=> Loading checkpoint")
+    model.load_state_dict(checkpoint['state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer'])
+
+
 if __name__ == "__main__":
-    training()
+    loss_list = training()
+    plt.plot(np.array(loss_list))
+    plt.show()
