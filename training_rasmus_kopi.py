@@ -78,6 +78,8 @@ def training():
             optimizer.step()
             
             all_loss += [l.detach().numpy()]
+            plt.plot(all_loss)
+            plt.show()
             
             if plot_in_training_loop == True:
                 out_np = out.detach().numpy()
