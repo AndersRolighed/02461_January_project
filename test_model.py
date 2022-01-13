@@ -53,6 +53,7 @@ class UNet(nn.Module):
         
         self.out = nn.Conv3d(in_channels=16, out_channels=4, kernel_size=1)
         self.softmax = nn.Softmax(dim=1)
+        self.sigmoid = nn.Sigmoid()
         
 
     def forward(self, input_data):
@@ -79,7 +80,8 @@ class UNet(nn.Module):
         # y9 = self.up_trans_5(y8)
         
         y = self.out(y)
-        y_out = self.softmax(y)
+        # y_out = self.softmax(y)
+        y_out = self.sigmoid(y)
         # y_out = self.out(y) 
         return y_out
         
@@ -89,7 +91,7 @@ class UNet(nn.Module):
 
 if __name__ == '__main__':
     directory = "./BraTS2020/train_valid_data/train/"
-    test_image, test_mask = batchLoad_single(directory, 0)
+    test_image, test_mask = batchLoad_single(directory, 5)
 
     # input_data = torch.rand((1, 4, 128, 128, 128))
     input_data = test_image
@@ -98,16 +100,76 @@ if __name__ == '__main__':
     # print(model(input_data))
     test_output = model(input_data)
     
-    print(type(test_output), np.shape(test_output))
-    print(test_output[0,:,75,75,75])
-    print("sum = ", sum(test_output[0,:,75,75,75].detach().numpy()))
+    # print(type(test_output), np.shape(test_output))
+    # print(test_output[0,:,75,75,75])
+    # print("sum = ", sum(test_output[0,:,75,75,75].detach().numpy()))
     
     # Plot test
     out_np = test_output.detach().numpy()
     mask_np = test_mask.detach().numpy()
     
-    # for pix in out_np[]
+    # print(out_np.shape)
+    # print(np.argmax(out_np, axis=1).shape)
     
     plot_2d_tensor(out_np, mask_np, 75)
     
-
+    
+    mask_argmax = np.argmax(test_mask.detach().numpy(), axis=1)
+    pred_argmax = np.argmax(test_output.detach().numpy(), axis=1)
+    
+    # num = 75
+    print(out_np[0,:,75,75,75])
+    print(pred_argmax[0,75,75,75])
+    # print(mask_np[0,:,75,75,75])
+    # print(mask_argmax[0,75,75,75])
+    
+    unique, counts = np.unique(mask_argmax, return_counts=True)
+    print("mask: ", dict(zip(unique, counts)))
+    
+    unique, counts = np.unique(pred_argmax, return_counts=True)
+    print("pred: ", dict(zip(unique, counts)))
+    
+    
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.subplot(121)
+    plt.imshow(pred_argmax[0,:,:,75])
+    plt.title("Predicted mask")
+    plt.subplot(122)
+    plt.imshow(mask_argmax[0,:,:,75])
+    plt.title("Original mask")
+    
+    plt.suptitle("eh")
+    plt.show()
+    
+    
+    # plot_2d_data(pred_argmax, mask_argmax, 75)
+    
+    # max_idx = np.argmax(out_np, axis=1)
+    
+    # test_arr = np.zeros((4,128,128,128))
+    
+    # test_arr[max_idx] = 1
+    
+    # plot_2d_data(test_arr, mask_np, 75)
+    # test_seg = test_arr[max_idx]
+    
+    
+    
+    # for i in out_np[:,:]:
+    #     for j in i:
+    #         for k in j:
+    #             print(k)
+                
+    
+    
+    # for channel in out_np[:]
+    
+    # for  in out_np[,:,,]
+    
+    # plot_2d_tensor(out_np, mask_np, 75)
+    
+    # print(
+    # mask_np[0,:,75,75,75],
+    # out_np[0,:,75,75,75]
+    # )

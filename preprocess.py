@@ -20,7 +20,8 @@ mask_list   = sorted(glob.glob('/home/jesperdlau/BraTS_Training_Data/MICCAI_BraT
 
 #%%
 # Set pwd (place of working directory) to your own specific location
-pwd = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/'
+# pwd = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/'
+pwd = '/home/jesperdlau/BraTS_Training_Data/'
 scaler = MinMaxScaler()
 
 def to_categorical(y, num_classes):
@@ -28,9 +29,9 @@ def to_categorical(y, num_classes):
     return np.eye(num_classes, dtype='uint8')[y]
 
 
-# for indx in range(len(t1_list)):   #Using t1_list as all lists are of same size
-for indx in range(20):
-    print("Preprocessing image and masks number: ", indx)
+for indx in range(len(t1_list)):   #Using t1_list as all lists are of same size
+# for indx in range(20, 50):
+    print("Preprocessing image and masks number:", indx)
     
     # Load image data from each modality and normalize
     temp_image_t1    = nib.load(t1_list[indx]).get_fdata()
@@ -57,8 +58,10 @@ for indx in range(20):
     temp_mask = np.stack([temp_mask[:,:,:,0], temp_mask[:,:,:,1], temp_mask[:,:,:,2], temp_mask[:,:,:,3]], axis=0)
     
     # Save image and mask
-    np.save(pwd + 'BraTS2020/input_data_4channels/images/image_' + str(indx) + '.npy', temp_combined_images)
-    np.save(pwd + 'BraTS2020/input_data_4channels/masks/mask_' + str(indx) + '.npy', temp_mask)
+    # np.save(pwd + 'BraTS2020/input_data_4channels/images/image_' + str(indx) + '.npy', temp_combined_images)
+    # np.save(pwd + 'BraTS2020/input_data_4channels/masks/mask_' + str(indx) + '.npy', temp_mask)
+    np.save(pwd + 'input_data_4channels/images/image_' + str(indx) + '.npy', temp_combined_images)
+    np.save(pwd + 'input_data_4channels/masks/mask_' + str(indx) + '.npy', temp_mask)
 
 #%% Plot 2*4 
 import matplotlib.pyplot as plt
@@ -103,7 +106,7 @@ plt.show()
 #%% Split folder into training and validation
 import splitfolders
 
-input_folder  = pwd + 'BraTS2020/input_data_4channels/'
-output_folder = pwd + 'BraTS2020/train_valid_data/'
+input_folder  = pwd + 'input_data_4channels/'
+output_folder = pwd + 'train_data_sample/'
 
 splitfolders.ratio(input_folder, output=output_folder, ratio=(.75, .25), group_prefix=None) # default values
