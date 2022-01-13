@@ -110,3 +110,20 @@ def batchLoad_single(directory, fileindex):
 # Example:
 # directory = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/BraTS2020/train_valid_data/train/'
 # test_image, test_mask = batchLoad_single(directory, 0)
+
+
+#%% 
+def plot_prediction_mask(prediction, mask, idx):
+    pred_argmax = np.argmax(prediction.detach().numpy(), axis=1)
+    mask_argmax = np.argmax(mask.detach().numpy(), axis=1)
+    
+    plt.figure()
+    plt.subplot(121)
+    plt.imshow(pred_argmax[0,:,:,idx])
+    plt.title("Predicted mask")
+    plt.subplot(122)
+    plt.imshow(mask_argmax[0,:,:,idx])
+    plt.title("Original mask")
+    
+    # plt.suptitle("")
+    plt.show()
