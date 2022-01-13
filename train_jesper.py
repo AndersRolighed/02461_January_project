@@ -7,6 +7,7 @@
 
 from data_load import BraTS_dataset
 from test_model import UNet
+from utilities import plot_prediction_mask
 
 import os, os.path
 
@@ -150,22 +151,24 @@ def train_epochs(NETWORK, NUM_EPOCHS, BATCH_SIZE, LEARN_RATE):
             # Diagnostics
             print(f"{idx}: {run_loss}")
             
-            out_np = preds.detach().numpy()
-            mask_np = labels.detach().numpy()
-            mask_argmax = np.argmax(mask_np, axis=1)
-            pred_argmax = np.argmax(out_np, axis=1)
+            # out_np = preds.detach().numpy()
+            # mask_np = labels.detach().numpy()
+            # mask_argmax = np.argmax(mask_np, axis=1)
+            # pred_argmax = np.argmax(out_np, axis=1)
             
-            # import matplotlib.pyplot as plt
-            plt.figure()
-            plt.subplot(121)
-            plt.imshow(pred_argmax[0,:,:,75])
-            plt.title("Predicted mask")
-            plt.subplot(122)
-            plt.imshow(mask_argmax[0,:,:,75])
-            plt.title("Original mask")
+            # # import matplotlib.pyplot as plt
+            # plt.figure()
+            # plt.subplot(121)
+            # plt.imshow(pred_argmax[0,:,:,75])
+            # plt.title("Predicted mask")
+            # plt.subplot(122)
+            # plt.imshow(mask_argmax[0,:,:,75])
+            # plt.title("Original mask")
             
-            plt.suptitle(f"Index: {idx}, Loss: {run_loss:.4f}")
-            plt.show()
+            # plt.suptitle(f"Index: {idx}, Loss: {run_loss:.4f}")
+            # plt.show()
+            
+            plot_prediction_mask(preds, labels, 75)
             
         # print(
         #     "epoch", epoch, 
@@ -188,7 +191,6 @@ if __name__ == '__main__':
     NUM_EPOCHS = 1
     BATCH_SIZE = 1
     LEARN_RATE = 0.001
-    
     
     
     network, all_loss = train_epochs(NETWORK, NUM_EPOCHS, BATCH_SIZE, LEARN_RATE)
