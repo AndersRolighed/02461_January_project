@@ -31,8 +31,6 @@ class UNet(nn.Module):
     def __init__(self):
         super(UNet, self).__init__()
         
-        self.softmax = nn.Softmax(dim=1)
-        
         self.max_pool = nn.MaxPool3d(kernel_size=2, stride=2)
         # kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=Fals
         
@@ -79,7 +77,7 @@ class UNet(nn.Module):
         # y9 = self.up_trans_5(y8)
         
         y = self.out(y)
-        y_out = self.softmax(y)
+        y_out = torch.sigmoid(y)
 
         return y_out
         
