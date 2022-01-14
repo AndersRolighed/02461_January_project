@@ -8,6 +8,7 @@ Created on Wed Jan 12 09:30:24 2022
 # fra - https://www.kaggle.com/iezepov/fast-iou-scoring-metric-in-pytorch-and-numpy
 
 import torch
+import numpy as np
 
 def iou_score(outputs: torch.Tensor, labels: torch.Tensor):
     SMOOTH = 1e-6
@@ -23,4 +24,17 @@ def iou_score(outputs: torch.Tensor, labels: torch.Tensor):
     
     thresholded = torch.clamp(20 * (iou - 0.5), 0, 10).ceil() / 10  # This is equal to comparing with thresolds
     
-    return thresholded  # Or thresholded.mean() if you are interested in average across the batch
+    return thresholded.mean()  # Or thresholded.mean() if you are interested in average across the batch
+
+if __name__ =="__main__":
+    
+    num_1 = 0
+    num_2 = 16
+    
+    mask_1 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_1}.npy"))
+    mask_2 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_2}.npy"))
+    
+    mask_1 = mask_1[1,:,:,:]
+    mask_2 = mask_2[2,:,:,:]   
+    
+    print(iou_score(mask_1,mask_2))
