@@ -56,7 +56,15 @@ def plot_2d_data(test_image,test_mask,n_slice):
 # Tager numpy ndarray eller torch tensor som input i test_image og test_mask
 # Plotter den givne slice (n_slice)
 
-def plot_2d_tensor(test_image,test_mask,n_slice):
+def plot_2d_tensor(test_image, test_mask):
+
+    max = 0
+    for i in range(128):
+        mask_sum = np.sum(test_mask[0,1,:,:,i])+np.sum(test_mask[0,2,:,:,i])+np.sum(test_mask[0,3,:,:,i])
+        if mask_sum > max:
+            max = mask_sum
+            n_slice = i
+
     plt.figure(figsize=(12, 8))
     
     plt.subplot(241)
@@ -113,7 +121,15 @@ def batchLoad_single(directory, fileindex):
 
 
 #%% 
-def plot_prediction_mask(prediction, mask, idx):
+def plot_prediction_mask(prediction, mask):
+    mask_np = mask.detach().numpy()
+    max = 0
+    for i in range(128):
+        mask_sum = np.sum(mask_np[0,1,:,:,i])+np.sum(mask_np[0,2,:,:,i])+np.sum(mask_np[0,3,:,:,i])
+        if mask_sum > max:
+            max = mask_sum
+            idx = i
+
     pred_argmax = np.argmax(prediction.detach().numpy(), axis=1)
     mask_argmax = np.argmax(mask.detach().numpy(), axis=1)
     
@@ -127,3 +143,14 @@ def plot_prediction_mask(prediction, mask, idx):
     
     # plt.suptitle("")
     plt.show()
+
+
+def save_checkpoint(state, filename):
+    print('=> Saving checkpoint')
+    torch.save(state, filename)
+
+
+def load_checkpoint(checkpoint, model, optimizer):
+    print("=> Loading checkpoint")
+    model.load_state_dict(checkpoint['state_dict'])
+    optimizer.load_state_dict(checkpoint['optimizer'])
