@@ -31,13 +31,20 @@ def training():
     out = 0
     mask = 0
 
-    #Hvis du gerne vil plotte efter hver loss
+    # Hvis du gerne vil plotte efter hver loss
     plot_in_training_loop = False
 
     # Sæt til True hvis du gerne vil køre videre med en loaded model,
     # skriv navnet på checkpointet du gerne vil loade her:
     load_model = True
     checkpoint_name = "16_epochs_BCEL_model.pth.tar"
+
+    # Sæt nummeret af epochs som modellen skal køre igennem inden den skal gemme modellen.
+    # modellen bliver så gemt med det navn du giver den i variablen 'save_name'.
+    # Prøv at gør navnet så beskrivende som muligt.
+    epoch_checkpoint = 10
+    save_name = "16_epochs_BCEL_model.pth.tar"
+
 
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
     device = "cuda" if torch.cuda.is_available() else torch.device("cpu")
@@ -74,8 +81,8 @@ def training():
         epoch_loss = []
 
         checkpoint = {'state_dict': model.state_dict(), 'optimizer': optimizer.state_dict()}
-        if epoch == 1:
-            save_checkpoint(checkpoint, "16_epochs_BCEL_model.pth.tar")
+        if epoch == epoch_checkpoint:
+            save_checkpoint(checkpoint, save_name)
 
         for i, (feature, mask) in enumerate(dataloader):
             feature, mask = feature.float(), mask.float()
