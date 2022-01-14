@@ -11,7 +11,6 @@ import numpy as np
 # Tager vores masks som input, og tæller 1 tallerne i mask 2,3 og 4, da den første
 # ikke opfører sig konsistent med sine værdier. 
 
-
 def count_nonzeros_in_masks(mask):
     
     m_2_mask_sum = mask[1,:,:,:].sum()
@@ -21,7 +20,6 @@ def count_nonzeros_in_masks(mask):
     count = m_2_mask_sum + m_3_mask_sum + m_4_mask_sum
     
     return count
-
 
 if __name__ == "__main__":
     from plot_function import plot_2d_data
