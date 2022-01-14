@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import torch 
 #funktionen tager numpy 
-from count_nonzeros import count_nonzeros_in_tensor
+#from count_nonzeros import count_nonzeros_in_tensor
 
 def plot_2d_data(test_image,test_mask,n_slice):
     plt.figure(figsize=(12, 8))
@@ -40,15 +40,32 @@ def plot_2d_data(test_image,test_mask,n_slice):
     
     plt.show()
 
-image_num = 17
+image_num = 4
 test_image = np.load(f"./BraTS2020/train_valid_data/train/images/image_{image_num}.npy")
 
-test_mask  = np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{image_num}.npy")
+test_mask = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{image_num}.npy"))
 
-np_test_mask = np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{image_num}.npy")
+m_1_test_mask = test_mask[0,:,:,:]
+m_2_test_mask = test_mask[1,:,:,:]
+m_3_test_mask = test_mask[2,:,:,:]
+m_4_test_mask = test_mask[3,:,:,:]
 
-print(np.count_nonzero(np_test_mask))
-plot_2d_data(test_image,test_mask,75)
+#np_test_mask = np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{image_num}.npy")
+
+#flat_tensor = torch.flatten(test_mask)
+
+#flat_array = np.flatten(np_test_mask)
+# print(m_1_test_mask.sum())
+# print(m_2_test_mask.sum())
+# print(m_3_test_mask.sum())
+# print(m_4_test_mask.sum())
+
+
+#print(torch.sum(flat_tensor))
+#print(torch.cumsum(test_mask,dim=2))
+#print(test_mask)
+#print(torch.sum(test_mask, keepdim = True))
+plot_2d_data(test_image,test_mask,70)
 
 
 
