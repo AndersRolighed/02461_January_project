@@ -11,7 +11,6 @@ Created on Sun Jan  2 14:21:19 2022
 import numpy as np
 import torch
 import torch.nn as nn
-from utilities import batchLoad_single, plot_2d_data, plot_2d_tensor
 
 #%% Functions
 
@@ -86,6 +85,8 @@ class UNet(nn.Module):
 
 
 if __name__ == '__main__':
+    from utilities import batchLoad_single, plot_2d_tensor
+    
     directory = "./BraTS2020/train_valid_data/train/"
     test_image, test_mask = batchLoad_single(directory, 0)
 
