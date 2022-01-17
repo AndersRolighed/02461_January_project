@@ -100,13 +100,16 @@ def dice_score_allmod(prediction, label):
     print(f"Dice score of all mods = {dice_allmod:.3f}")
     print("_"*48)
     
-def full_evaluation(prediction, label):
+def full_evaluation(prediction, label, img_n):
+    prediction = prediction[0,:,:,:,:]
+    label = label[0,:,:,:,:]
+    
     iou_score_allmod(prediction, label)
     dice_score_allmod(prediction, label)
 
 if __name__ =="__main__":
     
-    from utilities import plot_prediction_mask, plot_2d_tensor, plot_2d_data
+    # from utilities import plot_prediction_mask, plot_2d_tensor, plot_2d_data
     
     num_1 = 0
     num_2 = 4
@@ -121,8 +124,8 @@ if __name__ =="__main__":
     # iou_score_allmod(mask_1, mask_2)
     # dice_score_allmod(mask_1, mask_2)
     
-    #mask_1_mod = mask_1[mod_index,:,:,:]
-    #mask_2_mod = mask_2[mod_index,:,:,:]   
+    # mask_1_mod = mask_1[mod_index,:,:,:]
+    # mask_2_mod = mask_2[mod_index,:,:,:]   
     
-    #print(iou_score(mask_1_mod,mask_2_mod))
-    #plot_2d_data(mask_1, mask_2,n_slice)
+    # print(iou_score(mask_1_mod,mask_2_mod))
+    # plot_2d_data(mask_1, mask_2,n_slice)
