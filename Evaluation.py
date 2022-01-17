@@ -97,7 +97,7 @@ def dice_score_allmod(prediction, label):
     print(f"Dice score of mod 3 = {dice_mod3:.3f}")
     print(f"Dice score of mod 4 = {dice_mod4:.3f}")
     print(f"Mean of dice score of the 4 modalities = {dice_mean:.3f}")
-    print(f"Iou score of all mods = {dice_allmod:.3f}")
+    print(f"Dice score of all mods = {dice_allmod:.3f}")
     print("_"*48)
     
 def full_evaluation(prediction, label):
