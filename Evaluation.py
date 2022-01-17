@@ -9,6 +9,7 @@ Created on Wed Jan 12 09:30:24 2022
 
 import torch
 import numpy as np
+import torch.nn as nn
 
 def iou_score(outputs: torch.Tensor, labels: torch.Tensor):
     SMOOTH = 1e-6
@@ -64,12 +65,12 @@ def iou_score_allmod(prediction, label):
     iou_allmod = iou_score(prediction, label)
     
     print("_"*48)
-    print(f"Iou score of mod 1 = {iou_mod1:.3f}")
-    print(f"Iou score of mod 2 = {iou_mod2:.3f}")
-    print(f"Iou score of mod 3 = {iou_mod3:.3f}")
-    print(f"Iou score of mod 4 = {iou_mod4:.3f}")
-    print(f"Mean of iou score of the 4 modalities = {iou_mean:.3f}")
-    print(f"Iou score of all mods = {iou_allmod:.3f}")
+    print(f"Iou score of mod 1 = {iou_mod1:.7f}")
+    print(f"Iou score of mod 2 = {iou_mod2:.7f}")
+    print(f"Iou score of mod 3 = {iou_mod3:.7f}")
+    print(f"Iou score of mod 4 = {iou_mod4:.7f}")
+    print(f"Mean of iou score of the 4 modalities = {iou_mean:.7f}")
+    print(f"Iou score of all mods = {iou_allmod:.7f}")
     
 def dice_score_allmod(prediction, label):
     pred_mod1 = prediction[0,:,:,:]
@@ -92,31 +93,31 @@ def dice_score_allmod(prediction, label):
     dice_allmod = dice_score(prediction, label)
     
     print("_"*48)
-    print(f"Dice score of mod 1 = {dice_mod1:.3f}")
-    print(f"Dice score of mod 2 = {dice_mod2:.3f}")
-    print(f"Dice score of mod 3 = {dice_mod3:.3f}")
-    print(f"Dice score of mod 4 = {dice_mod4:.3f}")
-    print(f"Mean of dice score of the 4 modalities = {dice_mean:.3f}")
-    print(f"Dice score of all mods = {dice_allmod:.3f}")
+    print(f"Dice score of mod 1 = {dice_mod1:.7f}")
+    print(f"Dice score of mod 2 = {dice_mod2:.7f}")
+    print(f"Dice score of mod 3 = {dice_mod3:.7f}")
+    print(f"Dice score of mod 4 = {dice_mod4:.7f}")
+    print(f"Mean of dice score of the 4 modalities = {dice_mean:.7f}")
+    print(f"Dice score of all mods = {dice_allmod:.7f}")
     print("_"*48)
     
 def full_evaluation(prediction, label):
-    # print(prediction.size())
-    # print(label.size())
+ 
     prediction = prediction[0,:,:,:,:]
     label = label[0,:,:,:,:]
-    prediction = torch.round(prediction)
     
-    # print(prediction.size())
-    # print(label.size())
+    prediction = torch.nn.functional.one_hot(prediction.to(torch.int64))
+    label = torch.nn.functional.one_hot(label.to(torch.int64))
     
+    prediction = torch.tensor(prediction, dtype=torch.int64)
+    label = torch.tensor(label, dtype=torch.int64)
     
     iou_score_allmod(prediction, label)
     dice_score_allmod(prediction, label)
 
 if __name__ =="__main__":
     
-    from utilities import batchLoad_single
+    from utilities import batchLoad_single, plot_prediction_mask
     
     num_1 = 0
     num_2 = 4
@@ -129,13 +130,15 @@ if __name__ =="__main__":
     # mask_1 = torch.from_numpy(np.load(f"{directory}mask_{num_1}.npy"))
     # mask_2 = torch.from_numpy(np.load(f"{directory}mask_{num_2}.npy"))
     
-    image, mask = batchLoad_single(directory, fileindex_1)
-    #mask_2 = batchLoad_single(directory, fileindex_2)
+    # image, mask = batchLoad_single(directory, fileindex_1)
+    # mask_2 = batchLoad_single(directory, fileindex_2)
+    prediction = torch.from_numpy(np.load("./test_prediction.npy"))
+    mask = torch.from_numpy(np.load("./test_prediction_mask.npy"))
     
-    #print(type(image))
     
-    full_evaluation(image, mask)
-    
+    #full_evaluation(image, mask)
+    full_evaluation(prediction, mask)
+    plot_prediction_mask(prediction, mask)
     # iou_score_allmod(mask_1, mask_2)
     # dice_score_allmod(mask_1, mask_2)
     
