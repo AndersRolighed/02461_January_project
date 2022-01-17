@@ -28,15 +28,18 @@ def iou_score(outputs: torch.Tensor, labels: torch.Tensor):
 
 if __name__ =="__main__":
     
-    num_1 = 0
-    num_2 = 1
+    from utilities import plot_prediction_mask, plot_2d_tensor, plot_2d_data
     
-    mask_index = 1
+    num_1 = 0
+    num_2 = 2
+    mod_index = 1
+    n_slice = 70
     
     mask_1 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_1}.npy"))
     mask_2 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_2}.npy"))
     
-    mask_1 = mask_1[mask_index,:,:,:]
-    mask_2 = mask_2[mask_index,:,:,:]   
+    mask_1_mod = mask_1[mod_index,:,:,:]
+    mask_2_mod = mask_2[mod_index,:,:,:]   
     
-    print(iou_score(mask_1,mask_2))
+    print(iou_score(mask_1_mod,mask_2_mod))
+    plot_2d_data(mask_1, mask_2,n_slice)
