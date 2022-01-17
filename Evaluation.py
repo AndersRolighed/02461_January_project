@@ -101,11 +101,15 @@ def dice_score_allmod(prediction, label):
     print("_"*48)
     
 def full_evaluation(prediction, label):
+    print(prediction.size())
+    print(label.size())
     prediction = prediction[0,:,:,:,:]
     label = label[0,:,:,:,:]
+    print(prediction.size())
+    print(label.size())
     
-    iou_score_allmod(prediction, label)
-    dice_score_allmod(prediction, label)
+    #iou_score_allmod(prediction, label)
+    #dice_score_allmod(prediction, label)
 
 if __name__ =="__main__":
     
