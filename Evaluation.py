@@ -101,8 +101,8 @@ def dice_score_allmod(prediction, label):
     print("_"*48)
     
 def full_evaluation(prediction, label):
-    iou_score_allmod(mask_1, mask_2)
-    dice_score_allmod(mask_1, mask_2)
+    iou_score_allmod(prediction, label)
+    dice_score_allmod(prediction, label)
 
 if __name__ =="__main__":
     
