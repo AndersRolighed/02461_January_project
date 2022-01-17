@@ -103,14 +103,13 @@ def dice_score_allmod(prediction, label):
 def full_evaluation(prediction, label):
     iou_score_allmod(mask_1, mask_2)
     dice_score_allmod(mask_1, mask_2)
-    
 
 if __name__ =="__main__":
     
     from utilities import plot_prediction_mask, plot_2d_tensor, plot_2d_data
     
     num_1 = 0
-    num_2 = 5
+    num_2 = 4
     mod_index = 1
     n_slice = 70
     
