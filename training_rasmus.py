@@ -22,7 +22,6 @@ import os
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
-
 def training():
     # parameters
     learning_rate = 0.002
@@ -36,7 +35,7 @@ def training():
 
     # Sæt til True hvis du gerne vil køre videre med en loaded model,
     # skriv navnet på checkpointet du gerne vil loade her:
-    load_model = True
+    load_model = False
     checkpoint_name = "16_epochs_BCEL_model.pth.tar"
 
     # Så det i en video, ved ikke om vi får brug for det i forhold til HPC
@@ -94,7 +93,7 @@ def training():
                 out_np = out.detach().numpy()
                 mask_np = mask.detach().numpy()
 
-                plot_2d_tensor(mask_np, out_np, 75)
+                plot_2d_tensor(mask_np, out_np)
 
             print(f"loss = {l}")
         print(f"Average loss at epoch {epoch} is : ", np.mean(epoch_loss))
@@ -112,7 +111,6 @@ def training():
     plot_2d_tensor(mask_np, out_np)
 
     return all_loss
-
 
 if __name__ == "__main__":
     loss_list = training()

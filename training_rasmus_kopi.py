@@ -24,7 +24,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 def training():
     # parameters
     learning_rate = 0.002
-    num_epochs = 1
+    num_epochs = 2
     model = UNet()
     out = 0
     mask = 0
