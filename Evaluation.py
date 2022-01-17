@@ -100,7 +100,7 @@ def dice_score_allmod(prediction, label):
     print(f"Dice score of all mods = {dice_allmod:.3f}")
     print("_"*48)
     
-def full_evaluation(prediction, label, img_n):
+def full_evaluation(prediction, label):
     prediction = prediction[0,:,:,:,:]
     label = label[0,:,:,:,:]
     
