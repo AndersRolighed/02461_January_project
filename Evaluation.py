@@ -101,29 +101,40 @@ def dice_score_allmod(prediction, label):
     print("_"*48)
     
 def full_evaluation(prediction, label):
-    print(prediction.size())
-    print(label.size())
+    # print(prediction.size())
+    # print(label.size())
     prediction = prediction[0,:,:,:,:]
     label = label[0,:,:,:,:]
-    print(prediction.size())
-    print(label.size())
+    prediction = torch.round(prediction)
     
-    #iou_score_allmod(prediction, label)
-    #dice_score_allmod(prediction, label)
+    # print(prediction.size())
+    # print(label.size())
+    
+    
+    iou_score_allmod(prediction, label)
+    dice_score_allmod(prediction, label)
 
 if __name__ =="__main__":
     
-    # from utilities import plot_prediction_mask, plot_2d_tensor, plot_2d_data
+    from utilities import batchLoad_single
     
     num_1 = 0
     num_2 = 4
     mod_index = 1
     n_slice = 70
+    directory = "./BraTS2020/train_valid_data/train/"
+    fileindex_1 = 1
+    fileindex_2 = 2
     
-    mask_1 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_1}.npy"))
-    mask_2 = torch.from_numpy(np.load(f"./BraTS2020/train_valid_data/train/masks/mask_{num_2}.npy"))
+    # mask_1 = torch.from_numpy(np.load(f"{directory}mask_{num_1}.npy"))
+    # mask_2 = torch.from_numpy(np.load(f"{directory}mask_{num_2}.npy"))
     
-    full_evaluation(mask_1, mask_2)
+    image, mask = batchLoad_single(directory, fileindex_1)
+    #mask_2 = batchLoad_single(directory, fileindex_2)
+    
+    #print(type(image))
+    
+    full_evaluation(image, mask)
     
     # iou_score_allmod(mask_1, mask_2)
     # dice_score_allmod(mask_1, mask_2)
