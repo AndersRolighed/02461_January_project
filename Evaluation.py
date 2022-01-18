@@ -92,7 +92,7 @@ def iou_score_allmod(prediction, label, print_stats):
         print(f"Mean of iou score of the 4 modalities = {iou_mean:.7f}")
         print(f"Iou score of all mods = {iou_allmod:.7f}")
     
-    return iou_allmod
+    return iou_allmod.detach().numpy()
     
 def dice_score_allmod(prediction, label, print_stats):
     pred_mod1 = prediction[0,:,:,:]
@@ -124,7 +124,7 @@ def dice_score_allmod(prediction, label, print_stats):
         print(f"Dice score of all mods = {dice_allmod:.7f}")
         print("_"*48)
     
-    return dice_allmod
+    return dice_allmod.detach().numpy()
 
 def full_evaluation(prediction, label, print_stats):
     
@@ -200,7 +200,12 @@ if __name__ =="__main__":
     prediction = np.load("./test_prediction.npy")
     mask = np.load("./test_prediction_mask.npy")
     
-    full_evaluation(prediction, mask, True)
+    pixel_score, iou_score, dice_score = full_evaluation(prediction,mask,False)
+    
+    print(pixel_score)
+    print(iou_score)
+    print(dice_score)
+    
     # plot_prediction_mask(prediction, mask)
     # dice_score_allmod(prediction, mask, True)
     
