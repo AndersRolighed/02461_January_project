@@ -56,7 +56,11 @@ def dice_score(outputs: torch.Tensor, labels: torch.Tensor):
     intersection = (outputs & labels).float().sum((1, 2))  # Will be zero if Truth=0 or Prediction=0
     union = (outputs | labels).float().sum((1, 2))         # Will be zero if both are 0
     
-    dice = (2*intersection + SMOOTH) / (union + intersection + SMOOTH)  # We smooth our devision to avoid 0/0
+    output_pixels = outputs.float().sum((1,2))
+    
+    label_pixels = labels.float().sum((1,2))
+    
+    dice = (2*intersection + SMOOTH) / (output_pixels + label_pixels + SMOOTH)  # We smooth our devision to avoid 0/0
     
     thresholded = torch.clamp(20 * (dice - 0.5), 0, 10).ceil() / 10  # This is equal to comparing with thresolds
     
@@ -195,13 +199,11 @@ if __name__ =="__main__":
     
     # prediction = prediction[0,:,:,:,:]
     # mask = mask[0,:,:,:,:]
-
     
     prediction = np.load("./test_prediction.npy")
     mask = np.load("./test_prediction_mask.npy")
     
-    pixel_score, iou_score, dice_score = full_evaluation(prediction,mask,False)
-    
+    pixel_score, iou_score, dice_score = full_evaluation(prediction,mask,print_stats=True)
     
     # plot_prediction_mask(prediction, mask)
     # dice_score_allmod(prediction, mask, True)
