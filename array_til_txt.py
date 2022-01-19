@@ -7,8 +7,8 @@ Created on Wed Jan 19 10:53:09 2022
 
 import numpy as np 
 
-BCE_data = np.load("test_bce_arr.npy")
-focal_data = np.load("test_focal_arr.npy")
+BCE_data = np.load("test_bce_arr_2.npy")
+focal_data = np.load("test_focal_arr_2.npy")
 
 BCE_PIXEL = BCE_data[:,0]
 BCE_IOU = BCE_data[:,1]
