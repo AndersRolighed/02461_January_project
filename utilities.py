@@ -227,6 +227,83 @@ def plot_combined(prediction, mask, img_n, idx, info):
 
     plt.show()
     
+
+# Input: raw as tensor, prediction as tensor, mask as tensor, image number as int, index as int, and extra info as string (fx. )
+def plot_combined_withRaw(raw, prediction, mask, img_n, idx, info):
+    raw = raw.detach().numpy()
+    prediction = prediction.detach().numpy()
+    mask = mask.detach().numpy()
+    pred_argmax = np.argmax(prediction, axis=1)
+    mask_argmax = np.argmax(mask, axis=1)
+    
+    plt.figure(figsize=(10, 6))
+    plt.suptitle(f"Image: {img_n}  -  Slice: {idx}  -  Info: {info}")
+    
+    ax1 = plt.subplot2grid((3,5), (0,0))
+    ax2 = plt.subplot2grid((3,5), (0,1))
+    ax3 = plt.subplot2grid((3,5), (0,2))
+    ax4 = plt.subplot2grid((3,5), (0,3))
+    ax5 = plt.subplot2grid((3,5), (0,4))
+    
+    ax6 = plt.subplot2grid((3,5), (1,0))
+    ax7 = plt.subplot2grid((3,5), (1,1))
+    ax8 = plt.subplot2grid((3,5), (1,2))
+    ax9 = plt.subplot2grid((3,5), (1,3))
+    ax10 = plt.subplot2grid((3,5), (1,4))
+    
+    ax11 = plt.subplot2grid((3,5), (2,0))
+    ax12 = plt.subplot2grid((3,5), (2,1))
+    ax13 = plt.subplot2grid((3,5), (2,2))
+    ax14 = plt.subplot2grid((3,5), (2,3))
+    # ax15 = plt.subplot2grid((3,5), (2,4))
+    
+    # Preds
+    ax1.imshow(prediction[0,0,:,:,idx], cmap='gray')
+    ax1.set_title('Pred 1')
+    ax2.imshow(prediction[0,1,:,:,idx], cmap='gray')
+    ax2.set_title('Pred 2')
+    ax3.imshow(prediction[0,2,:,:,idx], cmap='gray')
+    ax3.set_title('Pred 3')
+    ax4.imshow(prediction[0,3,:,:,idx], cmap='gray')
+    ax4.set_title('Pred 4')
+    
+    # Masks
+    ax6.imshow(mask[0,0,:,:,idx], cmap='gray')
+    ax6.set_title('Mask 1')
+    ax7.imshow(mask[0,1,:,:,idx], cmap='gray')
+    ax7.set_title('Mask 2')
+    ax8.imshow(mask[0,2,:,:,idx], cmap='gray')
+    ax8.set_title('Mask 3')
+    ax9.imshow(mask[0,3,:,:,idx], cmap='gray')
+    ax9.set_title('Mask 4')
+    
+    # Raw
+    ax11.imshow(raw[0,0,:,:,idx], cmap='gray')
+    ax11.set_title('Raw 1')
+    ax12.imshow(raw[0,1,:,:,idx], cmap='gray')
+    ax12.set_title('Raw 2')
+    ax13.imshow(raw[0,2,:,:,idx], cmap='gray')
+    ax13.set_title('Raw 3')
+    ax14.imshow(raw[0,3,:,:,idx], cmap='gray')
+    ax14.set_title('Raw 4')
+    
+    # Argmax
+    ax5.imshow(pred_argmax[0,:,:,idx])
+    ax5.set_title("Argmax pred")
+    ax10.imshow(mask_argmax[0,:,:,idx])
+    ax10.set_title("Argmax mask")
+    
+    
+    for num in range(1,15):
+        exec('ax'+str(num)+'.set_yticklabels([])')
+        exec('ax'+str(num)+'.set_xticklabels([])')
+        exec('ax'+str(num)+'.set_xticks([])')
+        exec('ax'+str(num)+'.set_yticks([])')
+
+    plt.show()
+    
+    
+    
     
     
     
