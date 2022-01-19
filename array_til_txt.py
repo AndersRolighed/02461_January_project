@@ -18,14 +18,11 @@ focal_pixel = focal_data[:,0]
 focal_iou = focal_data[:,1]
 focal_dice = focal_data[:,2]
 
-print(np.mean(focal_dice))
-# print(np.mean(BCE_DICE))
+np.savetxt('BCE_PIXEL.csv', BCE_PIXEL, delimiter=",")
+np.savetxt('BCE_IOU.csv', BCE_IOU, delimiter=",")
+np.savetxt('BCE_DICE.csv', BCE_DICE, delimiter=",")
 
-# np.savetxt('BCE_PIXEL.csv', BCE_PIXEL, delimiter=",")
-# np.savetxt('BCE_IOU.csv', BCE_IOU, delimiter=",")
-# np.savetxt('BCE_DICE.csv', BCE_DICE, delimiter=",")
-
-# np.savetxt('focal_pixel.csv', focal_pixel, delimiter=",")
-# np.savetxt('focal_iou.csv', focal_iou, delimiter=",")
-# np.savetxt('focal_dice.csv', focal_dice, delimiter=",")
+np.savetxt('focal_pixel.csv', focal_pixel, delimiter=",")
+np.savetxt('focal_iou.csv', focal_iou, delimiter=",")
+np.savetxt('focal_dice.csv', focal_dice, delimiter=",")
 
