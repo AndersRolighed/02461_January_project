@@ -1,4 +1,4 @@
-setwd("/Users/saraandersen/Desktop/OneDrive/Sara/DTU/02461 Introduktion til intelligente systemer E21/Januar Projekt/clipboard.txt")
+setwd("/Users/saraandersen/Desktop/OneDrive/Sara/DTU/02461 Introduktion til intelligente systemer E21/Januar Projekt/clipboard.txt/csv_filer")
 
 # ANOVA dice
 BCE_dice<- read.table("BCE_DICE.csv", header = FALSE, sep = ",")
@@ -64,7 +64,249 @@ t.test(focal_pixel_unlisted)
 ###############################################################################
 ################################# OVERFITTING ################################# 
 ###############################################################################
-# ANOVA overfitting BCE Dice
+# ANOVA overfitting BCE Dice 100
+BCE_dice<- read.table("test_bce_dice_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_dice_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal Dice 100
+BCE_dice<- read.table("test_focal_dice_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_dice_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+
+###############################################################################
+# ANOVA overfitting BCE IOU 100
+BCE_dice<- read.table("test_bce_iou_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_iou_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal IOU 100
+BCE_dice<- read.table("test_focal_iou_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_iou_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting BCE pixel 100
+BCE_dice<- read.table("test_bce_pixel_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_pixel_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal pixel 100
+BCE_dice<- read.table("test_focal_pixel_100.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_pixel_100.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting BCE Dice 200
+BCE_dice<- read.table("test_bce_dice_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_dice_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal Dice 200
+BCE_dice<- read.table("test_focal_dice_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_dice_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+
+###############################################################################
+# ANOVA overfitting BCE IOU 200
+BCE_dice<- read.table("test_bce_iou_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_iou_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal IOU 200
+BCE_dice<- read.table("test_focal_iou_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_iou_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting BCE pixel 200
+BCE_dice<- read.table("test_bce_pixel_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_bce_pixel_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal pixel 200
+BCE_dice<- read.table("test_focal_pixel_200.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("train_focal_pixel_200.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting BCE Dice 300
 BCE_dice<- read.table("BCE_DICE.csv", header = FALSE, sep = ",")
 BCE_dice_train <- read.table("BCE_DICE_train.csv", header = FALSE, sep = ",")
 
@@ -83,10 +325,8 @@ anova(lm(dice~treatm_dice))
 t.test(BCE_dice_unlisted)
 t.test(BCE_dice_train_unlisted)
 
-
-
 ###############################################################################
-# ANOVA overfitting BCE Dice
+# ANOVA overfitting focal Dice 300
 BCE_dice<- read.table("focal_dice.csv", header = FALSE, sep = ",")
 BCE_dice_train <- read.table("focal_dice_train.csv", header = FALSE, sep = ",")
 
@@ -105,6 +345,86 @@ anova(lm(dice~treatm_dice))
 t.test(BCE_dice_unlisted)
 t.test(BCE_dice_train_unlisted)
 
+
+###############################################################################
+# ANOVA overfitting BCE IOU 300
+BCE_dice<- read.table("BCE_IOU.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("BCE_IOU_train.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal IOU 300
+BCE_dice<- read.table("focal_iou.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("focal_iou_train.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting BCE pixel 300
+BCE_dice<- read.table("BCE_PIXEL.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("BCE_PIXEL_train.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
+
+###############################################################################
+# ANOVA overfitting focal pixel 300
+BCE_dice<- read.table("focal_pixel.csv", header = FALSE, sep = ",")
+BCE_dice_train <- read.table("focal_pixel_train.csv", header = FALSE, sep = ",")
+
+BCE_dice_unlisted<-unlist(BCE_dice, use.names = FALSE)
+BCE_dice_train_unlisted<-unlist(BCE_dice_train, use.names = FALSE)
+
+dice <- c(BCE_dice_unlisted,BCE_dice_train_unlisted)
+treatm_dice <- factor(c(rep(c("BCE"), length(BCE_dice_unlisted)),rep(c("BCE_train"), length(BCE_dice_train_unlisted))))
+
+anova(lm(dice~treatm_dice))
+
+# Hvis p-værdien er under vores signifikansniveau (0.05?) er der evidens mod H0 
+# (at IOU for BCE og focal loss er ens) og derved må den ene model være bedre end den anden
+
+# Vi kan også bestemme konfidensintervallerne ved,
+t.test(BCE_dice_unlisted)
+t.test(BCE_dice_train_unlisted)
 
 
 
