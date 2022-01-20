@@ -7,22 +7,22 @@ Created on Wed Jan 19 10:53:09 2022
 
 import numpy as np 
 
-BCE_data = np.load("train_bce_arr_2.npy")
-focal_data = np.load("train_focal_arr_2.npy")
+arr1_data = np.load("train_focal_arr_100.npy")
+arr2_data = np.load("test_focal_arr_100.npy")
 
-BCE_PIXEL = BCE_data[:,0]
-BCE_IOU = BCE_data[:,1]
-BCE_DICE = BCE_data[:,2]    
+arr1_pixel = arr1_data[:,0]
+arr1_iou = arr1_data[:,1]
+arr1_dice = arr1_data[:,2]    
 
-focal_pixel = focal_data[:,0]
-focal_iou = focal_data[:,1]
-focal_dice = focal_data[:,2]
+arr2_pixel = arr2_data[:,0]
+arr2_iou = arr2_data[:,1]
+arr2_dice = arr2_data[:,2]
 
-np.savetxt('BCE_PIXEL_train.csv', BCE_PIXEL, delimiter=",")
-np.savetxt('BCE_IOU_train.csv', BCE_IOU, delimiter=",")
-np.savetxt('BCE_DICE_train.csv', BCE_DICE, delimiter=",")
+np.savetxt('train_focal_pixel_100.csv', arr1_pixel, delimiter=",")
+np.savetxt('train_focal_iou_100.csv', arr1_iou, delimiter=",")
+np.savetxt('train_focal_dice_100.csv', arr1_dice, delimiter=",")
 
-np.savetxt('focal_pixel_train.csv', focal_pixel, delimiter=",")
-np.savetxt('focal_iou_train.csv', focal_iou, delimiter=",")
-np.savetxt('focal_dice_train.csv', focal_dice, delimiter=",")
+np.savetxt('test_focal_pixel_100.csv', arr2_pixel, delimiter=",")
+np.savetxt('test_focal_iou_100.csv', arr2_iou, delimiter=",")
+np.savetxt('test_focal_dice_100.csv', arr2_dice, delimiter=",")
 
