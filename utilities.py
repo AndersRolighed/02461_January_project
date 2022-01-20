@@ -302,6 +302,114 @@ def plot_combined_withRaw(raw, prediction, mask, img_n, idx, info):
 
     plt.show()
     
+# Input: raw as tensor, bce as tensor, focal as tensor, mask as tensor, image number as int, index as int, learning rate as float, epoch as int
+# Remaining accuracy data as float
+def plot_bce_focal_raw(raw, bce, focal, mask, img_n, idx, LR, epoch, pix_bce, iou_bce, dice_bce, pix_focal, iou_focal, dice_focal):
+    # Prepare data
+    raw = raw.detach().numpy()
+    bce = bce.detach().numpy()
+    focal = focal.detach().numpy()
+    mask = mask.detach().numpy()
+    bce_argmax = np.argmax(bce, axis=1)
+    focal_argmax = np.argmax(focal, axis=1)
+    mask_argmax = np.argmax(mask, axis=1)
+    
+    # Initialize figure
+    plt.figure(figsize=(10, 9))
+    
+    # Set info in top
+    TITLE1 = f"Test_Image: {img_n}  -  Slice: {idx}  -  Learning Rate: {LR}  -  Epoch: {epoch}"
+    TITLE2 = f"\nPix_bce:   {pix_bce}  -   IOU_bce:   {iou_bce}  -   Dice_bce:   {dice_bce} "
+    TITLE3 = f"\nPix_focal: {pix_focal}  -   IOU_focal: {iou_focal}  -   Dice_focal: {dice_focal}"
+    plt.suptitle(t=TITLE1+TITLE2+TITLE3,
+                 x=0.13,
+                 y=0.98,
+                 ha="left")
+    
+    # Axies
+    ax1 = plt.subplot2grid((4,5), (0,0))
+    ax2 = plt.subplot2grid((4,5), (0,1))
+    ax3 = plt.subplot2grid((4,5), (0,2))
+    ax4 = plt.subplot2grid((4,5), (0,3))
+    ax5 = plt.subplot2grid((4,5), (0,4))
+    
+    ax6 = plt.subplot2grid((4,5), (2,0))
+    ax7 = plt.subplot2grid((4,5), (2,1))
+    ax8 = plt.subplot2grid((4,5), (2,2))
+    ax9 = plt.subplot2grid((4,5), (2,3))
+    ax10 = plt.subplot2grid((4,5), (2,4))
+    
+    ax11 = plt.subplot2grid((4,5), (3,0))
+    ax12 = plt.subplot2grid((4,5), (3,1))
+    ax13 = plt.subplot2grid((4,5), (3,2))
+    ax14 = plt.subplot2grid((4,5), (3,3))
+    ax15 = plt.subplot2grid((4,5), (3,4))
+    
+    ax16 = plt.subplot2grid((4,5), (1,0))
+    ax17 = plt.subplot2grid((4,5), (1,1))
+    ax18 = plt.subplot2grid((4,5), (1,2))
+    ax19 = plt.subplot2grid((4,5), (1,3))
+    ax20 = plt.subplot2grid((4,5), (1,4))
+    
+    # BCE
+    ax1.imshow(bce[0,0,:,:,idx], cmap='gray')
+    ax1.set_title('BCE 1')
+    ax2.imshow(bce[0,1,:,:,idx], cmap='gray')
+    ax2.set_title('BCE 2')
+    ax3.imshow(bce[0,2,:,:,idx], cmap='gray')
+    ax3.set_title('BCE 3')
+    ax4.imshow(bce[0,3,:,:,idx], cmap='gray')
+    ax4.set_title('BCE 4')
+    
+    # FOCAL
+    ax16.imshow(focal[0,0,:,:,idx], cmap='gray')
+    ax16.set_title('Focal 1')
+    ax17.imshow(focal[0,1,:,:,idx], cmap='gray')
+    ax17.set_title('Focal 2')
+    ax18.imshow(focal[0,2,:,:,idx], cmap='gray')
+    ax18.set_title('Focal 3')
+    ax19.imshow(focal[0,3,:,:,idx], cmap='gray')
+    ax19.set_title('Focal 4')
+    
+    # Masks
+    ax6.imshow(mask[0,0,:,:,idx], cmap='gray')
+    ax6.set_title('Mask: No tumor')
+    ax7.imshow(mask[0,1,:,:,idx], cmap='gray')
+    ax7.set_title('Mask: Core')
+    ax8.imshow(mask[0,2,:,:,idx], cmap='gray')
+    ax8.set_title('Mask: PTE')
+    ax9.imshow(mask[0,3,:,:,idx], cmap='gray')
+    ax9.set_title('Mask: GD')
+    
+    # Raw
+    ax11.imshow(raw[0,0,:,:,idx], cmap='gray')
+    ax11.set_title('T1')
+    ax12.imshow(raw[0,1,:,:,idx], cmap='gray')
+    ax12.set_title('T1Gd')
+    ax13.imshow(raw[0,2,:,:,idx], cmap='gray')
+    ax13.set_title('T2')
+    ax14.imshow(raw[0,3,:,:,idx], cmap='gray')
+    ax14.set_title('T2-FLAIR')
+    
+    # Argmax
+    ax5.imshow(bce_argmax[0,:,:,idx])
+    ax5.set_title("Argmax BCE")
+    ax10.imshow(mask_argmax[0,:,:,idx])
+    ax10.set_title("Argmax mask")
+    ax20.imshow(focal_argmax[0,:,:,idx])
+    ax20.set_title("Argmax focal")
+    
+    # Remove ticks and labels for each subplot
+    for num in range(1,21):
+        exec('ax'+str(num)+'.set_yticklabels([])')
+        exec('ax'+str(num)+'.set_xticklabels([])')
+        exec('ax'+str(num)+'.set_xticks([])')
+        exec('ax'+str(num)+'.set_yticks([])')
+
+    plt.show()
+    
+    
+    
     
     
     
