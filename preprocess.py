@@ -3,8 +3,10 @@
 """
 Preprocess
 
-Credit
 
+Partial credit to youtube user 'DigitalSreeni'
+https://www.youtube.com/watch?v=oB35sV1npVI
+https://github.com/bnsreenu/python_for_microscopists/blob/master/231_234_BraTa2020_Unet_segmentation/232_brats2020_get_data_ready.py
 """
 #%% Import
 
@@ -14,7 +16,7 @@ import nibabel as nib
 from sklearn.preprocessing import MinMaxScaler
 
 #%% Raw data
-# Set location to your own location for the RAW data, if available. 
+# Set location to the RAW data.
 t1_list    = sorted(glob.glob('/home/jesperdlau/BraTS_Training_Data/MICCAI_BraTS2020_TrainingData/*/*t1.nii'))
 t1ce_list  = sorted(glob.glob('/home/jesperdlau/BraTS_Training_Data/MICCAI_BraTS2020_TrainingData/*/*t1ce.nii'))
 t2_list    = sorted(glob.glob('/home/jesperdlau/BraTS_Training_Data/MICCAI_BraTS2020_TrainingData/*/*t2.nii'))
@@ -25,10 +27,10 @@ mask_list   = sorted(glob.glob('/home/jesperdlau/BraTS_Training_Data/MICCAI_BraT
 # Set pwd (place of working directory) to your own specific location
 # pwd = '/home/jesperdlau/Documents/Intro_Intelligente_Systemer/Januarprojekt/02461_January_project/'
 pwd = '/home/jesperdlau/BraTS_Training_Data/'
-scaler = MinMaxScaler()
 
+
+# Function to 1-hot encode
 def to_categorical(y, num_classes):
-    """ 1-hot encodes a tensor """
     return np.eye(num_classes, dtype='uint8')[y]
 
 
@@ -36,7 +38,8 @@ for indx in range(len(t1_list)):   #Using t1_list as all lists are of same size
 # for indx in range(20, 50):
     print("Preprocessing image and masks number:", indx)
     
-    # Load image data from each modality and normalize
+    # Load .nii data for each modality and min-max normalize
+    scaler = MinMaxScaler()
     temp_image_t1    = nib.load(t1_list[indx]).get_fdata()
     temp_image_t1    = scaler.fit_transform(temp_image_t1.reshape(-1, temp_image_t1.shape[-1])).reshape(temp_image_t1.shape)
     temp_image_t1ce  = nib.load(t1ce_list[indx]).get_fdata()
@@ -56,7 +59,7 @@ for indx in range(len(t1_list)):   #Using t1_list as all lists are of same size
     temp_mask[temp_mask==4] = 3
     temp_mask = temp_mask[56:184, 56:184, 13:141]
     
-    # Embed the 4 values to categorical 4-dimensinal, binary values. Finally stack the values to similar shape as with images. 
+    # 1-hot encode the 4 values of each mask. Finally stack the values to similar shape as with images. 
     temp_mask = to_categorical(temp_mask, num_classes=4)
     temp_mask = np.stack([temp_mask[:,:,:,0], temp_mask[:,:,:,1], temp_mask[:,:,:,2], temp_mask[:,:,:,3]], axis=0)
     

@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+"""
+
+
+Credit for Focal loss class to kaggle user 'RNA' 
+https://www.kaggle.com/bigironsphere/loss-function-library-keras-pytorch
+"""
 
 import numpy as np
 import torch

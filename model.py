@@ -3,7 +3,10 @@
 """
 Created on Sun Jan  2 14:21:19 2022
 
-@author: jesperdlau
+
+Credit for double_convolution fuction to Abhishek Thakur
+https://www.youtube.com/watch?v=u1loyDCoGbE
+
 """
 
 #%% Import
@@ -31,7 +34,6 @@ class UNet(nn.Module):
         super(UNet, self).__init__()
         
         self.max_pool = nn.MaxPool3d(kernel_size=2, stride=2)
-        # kernel_size, stride=None, padding=0, dilation=1, return_indices=False, ceil_mode=Fals
         
         self.down_conv_1 = double_convolution(4, 16)
         self.down_conv_2 = double_convolution(16, 32)
@@ -64,7 +66,7 @@ class UNet(nn.Module):
         x8 = self.max_pool(x7)
         x9 = self.down_conv_5(x8)
         
-        # Decoder (Uses unnessesary memory by storing each y1..8)
+        # Decoder which concatenates from the encoder layers
         y = self.up_trans_1(x9)
         y = self.up_conv_1(torch.cat([y,x7], 1))
         y = self.up_trans_2(y)
@@ -73,8 +75,8 @@ class UNet(nn.Module):
         y = self.up_conv_3(torch.cat([y,x3], 1))
         y = self.up_trans_4(y)
         y = self.up_conv_4(torch.cat([y,x1], 1))
-        # y9 = self.up_trans_5(y8)
-        
+
+        # Apply final conv3d layer and sigmoid        
         y = self.out(y)
         y_out = torch.sigmoid(y)
 
